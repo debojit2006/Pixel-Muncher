@@ -1,47 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Pixel Muncher</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pixel-muncher-classic</title>
+    <meta name="description" content="Lovable Generated Project" />
+    <meta name="author" content="Lovable" />
 
-    <!-- UI that appears on top of the game -->
-    <div id="ui-layer">
-        <div id="ui-bar">
-            <div id="score">SCORE: 0</div>
-            <div id="high-score">HIGH SCORE: 0</div>
-            <div id="lives"></div>
-        </div>
-    </div>
+    <meta property="og:title" content="pixel-muncher-classic" />
+    <meta property="og:description" content="Lovable Generated Project" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
 
-    <!-- The main game container -->
-    <div id="game-container">
-        <canvas id="gameCanvas"></canvas>
-    </div>
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@lovable_dev" />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+  </head>
 
-    <!-- Start Menu / Splash Screen -->
-    <div id="start-menu" class="modal-overlay">
-        <div class="modal-content">
-            <h1>Pixel Muncher</h1>
-            <p>Select a Difficulty</p>
-            <button id="easy-mode-btn">Easy</button>
-            <button id="hard-mode-btn">Hard</button>
-        </div>
-    </div>
-
-    <!-- Game Over Screen -->
-    <div id="game-over-menu" class="modal-overlay" style="display: none;">
-        <div class="modal-content">
-            <h1 id="game-over-title">GAME OVER</h1>
-            <p>Your Score: <span id="final-score">0</span></p>
-            <p>High Score: <span id="final-high-score">0</span></p>
-            <button id="play-again-btn">Play Again</button>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
