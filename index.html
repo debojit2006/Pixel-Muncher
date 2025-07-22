@@ -1,24 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pixel-muncher-classic</title>
-    <meta name="description" content="Lovable Generated Project" />
-    <meta name="author" content="Lovable" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Muncher</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-    <meta property="og:title" content="pixel-muncher-classic" />
-    <meta property="og:description" content="Lovable Generated Project" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <div class="container">
+        <!-- UI Bar for Score, High Score, and Lives -->
+        <div id="ui-bar">
+            <div id="score">SCORE: 0</div>
+            <div id="high-score">HIGH SCORE: 0</div>
+            <div id="lives">LIVES: ♥ ♥ ♥</div>
+        </div>
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-  </head>
+        <!-- Main Game Container -->
+        <div id="game-container">
+            <canvas id="gameCanvas"></canvas>
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+            <!-- Start Menu -->
+            <div id="start-menu" class="menu">
+                 <div class="menu-box">
+                    <h1>Pixel Muncher</h1>
+                    <p>Select Difficulty</p>
+                    <button id="start-easy">Easy</button>
+                    <button id="start-hard">Hard</button>
+                </div>
+            </div>
+
+            <!-- Game Over Menu -->
+            <div id="game-over-menu" class="menu">
+                <div class="menu-box">
+                    <h1 id="game-over-title">GAME OVER</h1>
+                    <p id="final-score">YOUR SCORE: 0</p>
+                    <p id="final-high-score">HIGH SCORE: 0</p>
+                    <button id="play-again">Play Again</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
 </html>
