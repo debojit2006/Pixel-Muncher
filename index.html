@@ -8,19 +8,40 @@
 </head>
 <body>
 
-    <div id="ui-bar">
-        <div id="score">SCORE: 0</div>
-        <div id="high-score">HIGH SCORE: 0</div>
+    <!-- UI that appears on top of the game -->
+    <div id="ui-layer">
+        <div id="ui-bar">
+            <div id="score">SCORE: 0</div>
+            <div id="high-score">HIGH SCORE: 0</div>
+            <div id="lives"></div>
+        </div>
     </div>
 
+    <!-- The main game container -->
     <div id="game-container">
-        <canvas id="gameCanvas" width="600" height="600"></canvas>
+        <canvas id="gameCanvas"></canvas>
     </div>
 
-    <div id="controls-info">
-        Use Arrow Keys or Swipe to Move
+    <!-- Start Menu / Splash Screen -->
+    <div id="start-menu" class="modal-overlay">
+        <div class="modal-content">
+            <h1>Pixel Muncher</h1>
+            <p>Select a Difficulty</p>
+            <button id="easy-mode-btn">Easy</button>
+            <button id="hard-mode-btn">Hard</button>
+        </div>
     </div>
-    
+
+    <!-- Game Over Screen -->
+    <div id="game-over-menu" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h1 id="game-over-title">GAME OVER</h1>
+            <p>Your Score: <span id="final-score">0</span></p>
+            <p>High Score: <span id="final-high-score">0</span></p>
+            <button id="play-again-btn">Play Again</button>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
