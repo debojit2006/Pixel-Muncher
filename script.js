@@ -109,7 +109,11 @@ class Player extends Character {
 }
 
 class Ghost extends Character {
-    constructor(x, y, colorName) { super(x, y, (0.75 * V) * ghostSpeedMultiplier, colorName); }
+    constructor(x, y, colorName) {
+        // Apply the difficulty multiplier to the ghost's speed
+        const finalSpeed = (0.75 * V) * ghostSpeedMultiplier;
+        super(x, y, finalSpeed, colorName);
+    }
     update() {
         if (this.isAtTileCenter()) {
             const choices = [];
@@ -149,7 +153,10 @@ class Ghost extends Character {
 
 // --- GAME FLOW & STATE MANAGEMENT ---
 function startGame(difficulty) {
-    ghostSpeedMultiplier = (difficulty === 'hard') ? 1.25 : 1.0;
+    // ** DIFFICULTY FIX **
+    // Easy mode makes the ghost much slower, Hard mode makes it faster.
+    ghostSpeedMultiplier = (difficulty === 'hard') ? 1.25 : 0.75;
+    
     gameState = 'playing';
     startMenu.style.display = 'none';
     gameOverMenu.style.display = 'none';
@@ -162,7 +169,7 @@ function resetGame() {
     score = 0;
     lives = 3;
     maze = originalMaze.map(row => [...row]);
-    resizeCanvas(); // Recalculate TILE_SIZE based on new canvas size
+    resizeCanvas();
     resetCharacters();
     updateScore();
     updateLives();
@@ -180,7 +187,12 @@ function playerLosesLife() {
     if (lives <= 0) {
         gameOver();
     } else {
-        resetCharacters();
+        // Pause briefly before resetting positions
+        gameState = 'paused';
+        setTimeout(() => {
+            resetCharacters();
+            gameState = 'playing';
+        }, 500);
     }
 }
 
@@ -192,7 +204,6 @@ function gameOver() {
 }
 
 function levelWon() {
-    // For now, winning also ends the game
     gameState = 'gameOver';
     document.getElementById('game-over-title').textContent = "YOU WIN!";
     finalScoreEl.textContent = score;
@@ -257,7 +268,11 @@ function countDots() {
 
 // --- GAME LOOP ---
 function gameLoop() {
-    if (gameState !== 'playing') return;
+    if (gameState !== 'playing') {
+        // Stop the loop if the game isn't active
+        if (animationFrameId) cancelAnimationFrame(animationFrameId);
+        return;
+    }
     update();
     draw();
     animationFrameId = requestAnimationFrame(gameLoop);
@@ -286,13 +301,24 @@ playAgainBtn.addEventListener('click', () => {
     gameState = 'menu';
 });
 
-// Keyboard Controls
+// ** KEYBOARD CONTROLS FIX **
+// This new, simpler switch statement is more reliable.
 window.addEventListener('keydown', (e) => {
-    if (gameState !== 'playing') return;
-    const keyMap = {'ArrowUp':'{x:0,y:-1}','w':'{x:0,y:-1}','ArrowDown':'{x:0,y:1}','s':'{x:0,y:1}','ArrowLeft':'{x:-1,y:0}','a':'{x:-1,y:0}','ArrowRight':'{x:1,y:0}','d':'{x:1,y:0}'};
-    if (keyMap[e.key]) {
-        e.preventDefault();
-        player.nextDir = JSON.parse(keyMap[e.key].replace(/'/g, '"'));
+    if (gameState !== 'playing' || !player) return;
+    e.preventDefault(); // Prevent default browser actions like scrolling
+    switch (e.key) {
+        case 'ArrowUp': case 'w':
+            player.nextDir = { x: 0, y: -1 };
+            break;
+        case 'ArrowDown': case 's':
+            player.nextDir = { x: 0, y: 1 };
+            break;
+        case 'ArrowLeft': case 'a':
+            player.nextDir = { x: -1, y: 0 };
+            break;
+        case 'ArrowRight': case 'd':
+            player.nextDir = { x: 1, y: 0 };
+            break;
     }
 });
 
@@ -325,7 +351,6 @@ function resizeCanvas() {
     canvas.width = size;
     canvas.height = size;
     TILE_SIZE = canvas.width / originalMaze[0].length;
-    // Redraw everything after resize
     if (gameState === 'playing') {
         draw();
     }
@@ -334,7 +359,7 @@ function resizeCanvas() {
 window.addEventListener('resize', () => {
     resizeCanvas();
     if (gameState === 'playing') {
-        resetCharacters(); // Recalculate positions based on new TILE_SIZE
+        resetCharacters();
     }
 });
 
@@ -343,7 +368,6 @@ function init() {
     resizeCanvas();
     updateScore();
     updateLives();
-    // Show start menu initially
     startMenu.style.display = 'flex';
 }
 
