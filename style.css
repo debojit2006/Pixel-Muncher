@@ -1,128 +1,125 @@
-/* Color Palette */
-:root {
-    --background-color: #2c3e50;  /* Dark Slate Blue */
-    --wall-color: #3498db;        /* Soft Blue */
-    --dot-color: #ecf0f1;         /* Light Gray / Off-white */
-    --power-pellet-color: #f1c40f;/* Sunflower Yellow */
-    --player-color: #f1c40f;      /* Sunflower Yellow */
-    --blinky-color: #e74c3c;      /* Soft Red */
-    --ui-text-color: #ecf0f1;     /* Light Gray */
-    --modal-bg-color: #34495e;    /* Darker Slate Blue */
-    --modal-overlay-color: rgba(0, 0, 0, 0.75);
-    --button-bg-color: #3498db;
-    --button-hover-bg-color: #2980b9;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Pixel Muncher Design System - Soft Retro Aesthetic */
+
+@layer base {
+  :root {
+    /* Game-specific color palette */
+    --game-bg: 210 22% 22%;           /* Dark Slate Blue #2c3e50 */
+    --game-wall: 204 70% 53%;         /* Soft Blue #3498db */
+    --game-dot: 192 15% 94%;          /* Light Gray #ecf0f1 */
+    --game-pellet: 48 89% 60%;        /* Sunflower Yellow #f1c40f */
+    --game-player: 48 89% 60%;        /* Sunflower Yellow #f1c40f */
+    --game-ghost: 6 78% 57%;          /* Soft Red #e74c3c */
+    --game-ui-text: 192 15% 94%;      /* Light Gray #ecf0f1 */
+    --game-menu-bg: 210 29% 24%;      /* Darker Slate Blue #34495e */
+    --game-menu-overlay: 0 0% 0%;     /* Black for rgba overlay */
+    --game-button: 204 70% 53%;       /* Soft Blue #3498db */
+    --game-button-hover: 204 64% 44%; /* Darker Blue #2980b9 */
+
+    /* Semantic tokens using game colors */
+    --background: var(--game-bg);
+    --foreground: var(--game-ui-text);
+    --card: var(--game-menu-bg);
+    --card-foreground: var(--game-ui-text);
+    --popover: var(--game-menu-bg);
+    --popover-foreground: var(--game-ui-text);
+    --primary: var(--game-button);
+    --primary-foreground: var(--game-ui-text);
+    --secondary: var(--game-menu-bg);
+    --secondary-foreground: var(--game-ui-text);
+    --muted: var(--game-menu-bg);
+    --muted-foreground: var(--game-ui-text);
+    --accent: var(--game-pellet);
+    --accent-foreground: var(--game-bg);
+    --destructive: var(--game-ghost);
+    --destructive-foreground: var(--game-ui-text);
+    --border: var(--game-wall);
+    --input: var(--game-menu-bg);
+    --ring: var(--game-button);
+    --radius: 0.5rem;
+
+    /* Sidebar tokens */
+    --sidebar-background: var(--game-menu-bg);
+    --sidebar-foreground: var(--game-ui-text);
+    --sidebar-primary: var(--game-button);
+    --sidebar-primary-foreground: var(--game-ui-text);
+    --sidebar-accent: var(--game-bg);
+    --sidebar-accent-foreground: var(--game-ui-text);
+    --sidebar-border: var(--game-wall);
+    --sidebar-ring: var(--game-button);
+  }
+
+  .dark {
+    /* Use same colors for dark mode in this retro game */
+    --background: var(--game-bg);
+    --foreground: var(--game-ui-text);
+    --card: var(--game-menu-bg);
+    --card-foreground: var(--game-ui-text);
+    --popover: var(--game-menu-bg);
+    --popover-foreground: var(--game-ui-text);
+    --primary: var(--game-button);
+    --primary-foreground: var(--game-ui-text);
+    --secondary: var(--game-menu-bg);
+    --secondary-foreground: var(--game-ui-text);
+    --muted: var(--game-menu-bg);
+    --muted-foreground: var(--game-ui-text);
+    --accent: var(--game-pellet);
+    --accent-foreground: var(--game-bg);
+    --destructive: var(--game-ghost);
+    --destructive-foreground: var(--game-ui-text);
+    --border: var(--game-wall);
+    --input: var(--game-menu-bg);
+    --ring: var(--game-button);
+    --sidebar-background: var(--game-menu-bg);
+    --sidebar-foreground: var(--game-ui-text);
+    --sidebar-primary: var(--game-button);
+    --sidebar-primary-foreground: var(--game-ui-text);
+    --sidebar-accent: var(--game-bg);
+    --sidebar-accent-foreground: var(--game-ui-text);
+    --sidebar-border: var(--game-wall);
+    --sidebar-ring: var(--game-button);
+  }
 }
 
-/* General page styling */
-html, body {
-    height: 100%;
-    margin: 0;
-    overflow: hidden; /* Prevents scrolling on mobile */
-    background-color: var(--background-color);
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: var(--ui-text-color);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
 
-/* Layer for UI elements like score and lives */
-#ui-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 10;
-}
-
-#ui-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    font-size: clamp(0.8rem, 3vw, 1.2rem); /* Responsive font size */
-    font-weight: bold;
-}
-
-#lives {
-    display: flex;
-}
-
-.life-heart {
-    color: var(--blinky-color);
-    margin-left: 5px;
-    font-size: clamp(1rem, 4vw, 1.5rem);
-}
-
-/* Container for the game canvas for responsive scaling */
-#game-container {
-    width: 100%;
-    max-width: 95vh; /* Max width is 95% of viewport height */
-    max-height: 95vw; /* Max height is 95% of viewport width */
-    aspect-ratio: 1 / 1; /* Keeps the canvas square */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-canvas {
-    background-color: var(--background-color);
+  canvas {
     display: block;
-    width: 100%;
-    height: 100%;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: -webkit-crisp-edges;
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
-}
+    background: hsl(var(--game-bg));
+    border: 2px solid hsl(var(--game-wall));
+  }
 
-/* Styles for Modal Overlays (Start/Game Over) */
-.modal-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--modal-overlay-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 20;
-    text-align: center;
-}
+  .game-overlay {
+    background: hsla(var(--game-menu-overlay), 0.75);
+  }
 
-.modal-content {
-    background-color: var(--modal-bg-color);
-    padding: 30px 40px;
-    border-radius: 15px;
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
-}
+  .game-button {
+    background: hsl(var(--game-button));
+    color: hsl(var(--game-ui-text));
+    border: 2px solid hsl(var(--game-wall));
+    transition: all 0.2s ease;
+  }
 
-.modal-content h1 {
-    margin-top: 0;
-    color: var(--power-pellet-color);
-}
+  .game-button:hover {
+    background: hsl(var(--game-button-hover));
+    transform: translateY(-2px);
+  }
 
-.modal-content p {
-    font-size: 1.2em;
-    margin-bottom: 25px;
-}
-
-/* Button Styling */
-button {
-    background-color: var(--button-bg-color);
-    color: var(--ui-text-color);
-    border: none;
-    padding: 15px 30px;
-    font-size: 1.1em;
-    font-weight: bold;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    margin: 5px;
-}
-
-button:hover {
-    background-color: var(--button-hover-bg-color);
+  .heart-icon {
+    color: hsl(var(--game-ghost));
+  }
 }
